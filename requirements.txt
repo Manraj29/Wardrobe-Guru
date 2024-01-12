@@ -1,0 +1,6 @@
+streamlit
+os 
+io
+PIL.Image
+python-dotenv
+google-generativeai
