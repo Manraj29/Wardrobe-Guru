@@ -1,5 +1,4 @@
 streamlit
-PIL
+Image
 python-dotenv
 google-generativeai
-google.generativeai
