@@ -16,8 +16,10 @@ image_model = genai.GenerativeModel("gemini-pro-vision")
 def get_combinations(query, clothes_desc):
     if query == "":
          text = f"You are an amazing stylist who knows best color combinations for outfits. So Build me some good outfits with great color combinations from the clothes which i have uploaded, these are the descriptions of each item {clothes_desc}. Using the description of each item, I want you to generate some good outfits for me using the items which i have given you."
+    elif clothes_desc == []:
+        text = f"You are an amazing stylist who knows best color combinations for outfits. So Build me some good outfits with great color combinations using the description of each item, I want you to generate some good outfits for me along with the needs like {query}."
     else:
-        text = f"You are an amazing stylist who knows best color combinations for outfits. So Build me some good outfits with great color combinations from the clothes which i have uploaded, these are the descriptions of each item {clothes_desc}. Using the description of each item, I want you to generate some good outfits for me. Also, I want you to add on {query}."
+        text = f"You are an amazing stylist who knows best color combinations for outfits. So Build me some good outfits with great color combinations from the clothes which i have uploaded, these are the descriptions of each item {clothes_desc}. Using the description of each item, I want you to generate some good outfits for me along with the needs like {query}."
     response = text_model.generate_content(text)
     response.resolve()
     return response.text
@@ -48,8 +50,8 @@ query = st.text_input("Enter some other description for the outfit you want to a
 
 # button click
 if st.button("Generate Outfits"):
-    if not uploded_clothes:
-        st.error("Please upload at least one image to generate outfit suggestions.")
+    if not uploded_clothes and query == "":
+        st.error("Please upload at least one image or describe your needs in textbox to generate outfit suggestions.")
         exit()  # Or offer alternative actions like browsing pre-defined outfits
 
     for clothes in uploded_clothes:
@@ -66,3 +68,4 @@ if st.button("Generate Outfits"):
     st.success(final_combos)
     print(final_combos)
     
+st.markdown("***While uploading images it might take some more time to process the images. so please wait for some time.***")
